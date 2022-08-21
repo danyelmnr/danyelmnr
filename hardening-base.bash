@@ -8,8 +8,8 @@ apt install -y nfs-common sudo dirmngr
 #instalação de pacotes de segurança e anti-rootkit
 apt install -y rkhunter chkrootkit unhide debsecan
 
-#inlusao de usuario no SUDOERS (Altere o usuario aqui)
-#echo "usuario ALL=(ALL) ALL" >> /etc/sudoers
+#inlusao de usuario Administrator no SUDOERS (Altere o usuario aqui)
+#echo "administrator ALL=(ALL) ALL" >> /etc/sudoers
 
 #configuração de firewall com UFW
 apt install ufw
@@ -21,7 +21,7 @@ ufw allow 123/udp
 ufw allow 53/udp
 ufw enable
 
-#limite de sessão de usuário
+#limite de sessão para usuários do sistema
 echo "export TMOUT=300" >> /etc/profile
 echo "export TMOUT=300" >> /root/.bashrc
 echo "export TMOUT=300" >> /etc/skel/.bashrc
@@ -29,8 +29,8 @@ echo "export TMOUT=300" >> /etc/skel/.bashrc
 #CONFIGURAÇÕES SSH
 #realiza backup de conf do arquivo sshd_config
 cp /etc/ssh/sshd_config /etc/ssh/sshd_config.old
-# Definindo porta SSH
-sed -i 's/^#\(Port\).*/\1 22/' /etc/ssh/sshd_config;
+# Definindo porta alta para o SSH (Port 4107)
+sed -i 's/^#\(Port\).*/\1 4107/' /etc/ssh/sshd_config;
 echo 'Protocol 2' >> /etc/ssh/sshd_config
 #ativação de Banner em sessão SSH
 banner_path='/etc/issue.net'
