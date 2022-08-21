@@ -8,14 +8,15 @@ apt install -y nfs-common sudo dirmngr
 #instalação de pacotes de segurança e anti-rootkit
 apt install -y rkhunter chkrootkit unhide debsecan
 
-#inlusao de usuario no SUDOERS
-echo "danyelmnr ALL=(ALL) ALL" >> /etc/sudoers
+#inlusao de usuario no SUDOERS (Altere o usuario aqui)
+#echo "usuario ALL=(ALL) ALL" >> /etc/sudoers
 
 #configuração de firewall com UFW
 apt install ufw
 ufw default deny incoming
 ufw default allow outgoing
-ufw allow 4140/tcp
+#libera porta principais como SSH(22) e DNS(53)
+ufw allow 22/tcp
 ufw allow 123/udp
 ufw allow 53/udp
 ufw enable
@@ -29,7 +30,7 @@ echo "export TMOUT=300" >> /etc/skel/.bashrc
 #realiza backup de conf do arquivo sshd_config
 cp /etc/ssh/sshd_config /etc/ssh/sshd_config.old
 # Definindo porta SSH
-sed -i 's/^#\(Port\).*/\1 4140/' /etc/ssh/sshd_config;
+sed -i 's/^#\(Port\).*/\1 22/' /etc/ssh/sshd_config;
 echo 'Protocol 2' >> /etc/ssh/sshd_config
 #ativação de Banner em sessão SSH
 banner_path='/etc/issue.net'
@@ -39,9 +40,10 @@ sed -i 's/^#\(SyslogFacility\).*/\1 AUTH/' /etc/ssh/sshd_config;
 sed -i 's/^#\(LogLevel\).*/\1 INFO/' /etc/ssh/sshd_config;
 #configuração de parâmetros importantes para segurança do SSH
 sed -i 's/^#\(PermitRootLogin\).*/\1 no/' /etc/ssh/sshd_config;
+#Define apenas 2 seções SSH
 sed -i 's/^#\(MaxSessions\).*/\1 2/' /etc/ssh/sshd_config;
 sed -i 's/^#\(PermitEmptyPasswords\).*/\1 no/' /etc/ssh/sshd_config;
-#desativa o login via senha, deixando apenas via chaves assimétricas
+#desativa o login via senha, deixando apenas via chaves assimétricas (Descomente para ativar)
 #sed -i 's/^#\(PasswordAuthentication\).*/\1 no/' /etc/ssh/sshd_config
 #Configuração do Banner do sistema
 echo -e '\nWelcome! \n\nSession started successfully. Everything done in the system will be logged. \n\nContact: danyel.mendes@ifsertao-pe.edu.br\n' > /etc/issue.net
