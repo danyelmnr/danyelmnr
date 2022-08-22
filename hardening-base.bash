@@ -59,11 +59,7 @@ sed -i 's/^#\(PubkeyAuthentication\).*/\1 yes/' /etc/ssh/sshd_config
 sed -i 's/^#\(AllowUsers\).*/\1 administrator/' /etc/ssh/sshd_config
 sed -i 's/^#\(DenyUsers\).*/\1 root/' /etc/ssh/sshd_config
 
-# Definindo usuarios permitidos para login SSH
-sed -i 's/^#\(AllowUsers\).*/\1 administrator/' /etc/ssh/sshd_config
-sed -i 's/^#\(DenyUsers\).*/\1 root/' /etc/ssh/sshd_config
-
-# Expulsando usuarios ociosos das sessões SSH9 (TMOUT=5min=300s)
+# Expulsando usuarios ociosos das sessões SSH (TMOUT=5min=300s)
 sed -i 's/^#\(ClientAliveInterval\).*/\1 300/' /etc/ssh/sshd_config
 sed -i 's/^#\(ClientAliveCountMax\).*/\1 0/' /etc/ssh/sshd_config
 # Desabilitando leitura dos arquivos ~/.rhosts e ~/.shosts do usuário
