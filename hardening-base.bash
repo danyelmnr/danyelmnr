@@ -8,7 +8,9 @@ apt install -y nfs-common sudo dirmngr
 # instalação de pacotes de segurança e anti-rootkit
 apt install -y rkhunter chkrootkit unhide debsecan
 
-adduser administrator sudo
+#criando usuário administrator e incluindo no grupo sudo
+adduser administrator
+usermod -aG sudo administrator
 # inlusao de usuario administrator no SUDOERS (Altere o usuario aqui)
 # echo "administrator ALL=(ALL) ALL" >> /etc/sudoers
 
