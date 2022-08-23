@@ -71,6 +71,10 @@ sed -i 's/^#\(HostbasedAuthentication\).*/\1 no/' /etc/ssh/sshd_config
 # Desabilitando encaminhamento X11Forwarding
 sed -i 's/^#\(X11Forwarding\).*/\1 no/' /etc/ssh/sshd_config
 
+#TCP Wrappers para permitir a conexão de hosts específicos (MODIFIQUE A REDE LOCAL)
+# echo "sshd: ALL >> /etc/hosts.deny
+# echo "sshd: 192.168.0 >> /etc/hosts.allow
+
 systemctl restart ssh
 
 # remoção de kernels não utilizados, atualização do sistema e limpeza de pacotes não usados
