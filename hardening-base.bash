@@ -72,8 +72,8 @@ sed -i 's/^#\(HostbasedAuthentication\).*/\1 no/' /etc/ssh/sshd_config
 sed -i 's/^#\(X11Forwarding\).*/\1 no/' /etc/ssh/sshd_config
 
 #TCP Wrappers para permitir a conexão de hosts específicos (MODIFIQUE A REDE LOCAL)
-# echo "sshd: ALL >> /etc/hosts.deny
-# echo "sshd: 192.168.0 >> /etc/hosts.allow
+# echo "sshd: ALL" >> /etc/hosts.deny
+# echo "sshd: 192.168.0" >> /etc/hosts.allow
 
 systemctl restart ssh
 
