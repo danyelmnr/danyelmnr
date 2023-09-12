@@ -1,0 +1,49 @@
+#!/bin/bash
+
+# Autor: Danyel Mendes Nogueira Ramos
+# danyel.mendes@ifsertao-pe.edu.br
+# Descrição: Script que realiza uma faxina em um servidor cups
+# Script: print_queue_clear.sh
+
+echo -e "Task 1: Update system...\n"
+apt update && apt upgrade -y
+
+echo -e "Task 2: Removing junk and temporary packages...\n"
+du -h /var/cache/apt/archives/
+apt clean && apt autoclean
+apt autoremove
+
+echo -e "Task 3: Removing junk and temporary packages...\n"
+rm -Rf ~/.local/share/Trash/files/*
+
+echo -e "Task 4: Cleaning the kernels that are no longer used...\n"
+dpkg -l 'linux-*' | sed '/^ii/!d;/'"$(uname -r | sed "s/\(.*\)-\([^0-9]\+\)/\1/")"'/d;s/^[^ ]* [^ ]* \([^ ]*\).*/\1/;/[0-9]/!d' | xargs apt-get -y purge
+
+echo -e "Task 5: Cleaning caches...\n"
+echo 3 >/proc/sys/vm/drop_caches
+sysctl -w vm.drop_caches=3
+#Cleaning cache memory files system,
+sync
+echo 1 >/proc/sys/vm/drop_caches
+echo -e "Cleaning pagecaches, inodes e dentries\n:"
+echo 3 >/proc/sys/vm/drop_caches
+rm -R /var/spool/cups/*
+
+# get printers names
+printers=$(lpstat -p | cut -d' ' -f2)
+# maintenance printers
+for i in $printers; do
+    echo "Cancel all jobs and data files in $i - [OK]"
+    cancel -a -x $i
+    echo "Enableding $i - [OK]"
+    cupsenable $i
+    echo -e "Accepting jobs in $i - [OK]\n"
+    cupsaccept $i
+done
+
+echo -e "Restarting cups service...\n"
+/etc/init.d/./cups restart
+echo -e "Printers status...\n"
+lpstat -p
+#printers status
+lpstat -p
