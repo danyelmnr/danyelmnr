@@ -6,7 +6,7 @@ if ($PSVersionTable.PSEdition -eq 'Desktop' -and $PSVersionTable.PSVersion.Major
     $installerFile = "PowerShell-latest-win-x64.msi"
 
     # Define o URL para baixar o arquivo de instalação
-    $downloadUrl = "https://github.com/PowerShell/PowerShell/releases/latest/download/$installerFile"
+    $downloadUrl = "https://github.com/PowerShell/PowerShell/releases/download/v7.3.5/PowerShell-7.3.5-win-x86.msi"
 
     # Define o local onde o arquivo será salvo temporariamente
     $tempFile = "$env:TEMP\$installerFile"
@@ -31,6 +31,25 @@ if ($PSVersionTable.PSEdition -eq 'Desktop' -and $PSVersionTable.PSVersion.Major
 }
 
 Invoke-Command 
+
+function Verb-Noun {
+    [CmdletBinding()]
+    param (
+        
+    )
+    
+    begin {
+        
+    }
+    
+    process {
+        
+    }
+    
+    end {
+        
+    }
+}
 
 
 
